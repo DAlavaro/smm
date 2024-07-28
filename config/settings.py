@@ -26,6 +26,7 @@ DJANGO_APPS = [
 
 USER_APPS = [
     'app.main.apps.MainConfig',
+    'app.smm.apps.SmmConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + USER_APPS
@@ -65,8 +66,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'smm',
+        'USER': 'postgres',
+        'PASSWORD': '123',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 

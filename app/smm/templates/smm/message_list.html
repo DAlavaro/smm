@@ -1,0 +1,38 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>Коллекция ваших сообщений для рассылки</h2>
+            <a href="{% url 'smm:message_create' %}" class="btn btn-primary">Добавить сообщение</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <thead>
+                <tr>
+                    <th scope="col">№</th>
+                    <th scope="col">Тема</th>
+                    <th scope="col">Сообщение</th>
+                    <th scope="col">Действие</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for object in object_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>
+                            <a href="{% url 'smm:message_update' object.pk %}">{{ object.name }}</a>
+                        </td>
+                        <td>{{ object.text|truncatewords:10 }}</td>
+                        <td>
+                            <a href="{% url 'smm:message_delete' object.pk %}" class="btn btn-sm btn-danger">
+                            Удалить
+                        </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+{% endblock %}
