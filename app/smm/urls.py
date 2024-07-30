@@ -2,7 +2,8 @@
 from django.urls import path
 
 from app.smm.views import (ClientView, ClientCreateView, ClientUpdateView, ClientDeleteView,
-                           MessageView, MessageCreateView, MessageUpdateView, MessageDeleteView)
+                           MessageView, MessageCreateView, MessageUpdateView, MessageDeleteView,
+                           MailView, MailCreateView, MailUpdateView, MailDeleteView, SendMailView)
 
 app_name = 'smm'
 
@@ -16,4 +17,10 @@ urlpatterns = [
     path('message/create/', MessageCreateView.as_view(), name='message_create'),
     path('message/<int:pk>/update/', MessageUpdateView.as_view(), name='message_update'),
     path('message/<int:pk>/delete/', MessageDeleteView.as_view(), name='message_delete'),
+
+    path('mail/', MailView.as_view(), name='mail_list'),
+    path('mail/create/', MailCreateView.as_view(), name='mail_create'),
+    path('mail/<int:pk>/update/', MailUpdateView.as_view(), name='mail_update'),
+    path('mail/<int:pk>/delete/', MailDeleteView.as_view(), name='mail_delete'),
+    path('mail/<int:pk>/send/', SendMailView.as_view(), name='send_mail'),
 ]
