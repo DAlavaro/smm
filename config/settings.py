@@ -32,6 +32,7 @@ DJANGO_APPS = [
 USER_APPS = [
     'app.main.apps.MainConfig',
     'app.smm.apps.SmmConfig',
+    'django_crontab'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + USER_APPS
@@ -126,3 +127,9 @@ EMAIL_PORT = 465
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_SSL = True
+
+# Настройка для CRON
+CRONJOBS = [
+    ('* * * * *', 'app.smm.cron.my_job'),
+]
+
