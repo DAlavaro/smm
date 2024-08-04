@@ -1,15 +1,15 @@
 # config/settings.py
 import os
 from pathlib import Path
+
+from celery.schedules import crontab
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Загрузка переменных из .env файла
 load_dotenv(os.path.join(BASE_DIR, '.env'))
-
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-a!#eh&f+g92nk@*&-c!)1mov#7l3hf9bo_*w%47jffoihty_*n'
@@ -32,6 +32,8 @@ DJANGO_APPS = [
 USER_APPS = [
     'app.main.apps.MainConfig',
     'app.smm.apps.SmmConfig',
+    'django_celery_results',
+    'django_celery_beat',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + USER_APPS
@@ -112,7 +114,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = (
-  BASE_DIR / 'static',
+    BASE_DIR / 'static',
 )
 
 # Default primary key field type
@@ -126,3 +128,23 @@ EMAIL_PORT = 465
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_SSL = True
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'django-db'
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+    }
+}
+
+# celery setting.
+CELERY_CACHE_BACKEND = 'default'
+
+CELERY_BEAT_SCHEDULE = {
+    'send-mailings-every-day': {
+        'task': 'app.smm.tasks.send_mailings',
+        'schedule': crontab(hour=18, minute=30),  # каждый день в 9:00 утра
+    },
+}

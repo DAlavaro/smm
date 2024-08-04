@@ -1,4 +1,6 @@
 # app/smm/forms.py
+from django.utils import timezone
+
 from django import forms
 from app.smm.models import Client, Message, Mail
 
@@ -37,8 +39,13 @@ class MailForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = Mail
-        fields = ['name', 'time', 'count', 'period', 'status', 'message', 'clients']
+        fields = ['name', 'time', 'count', 'period', 'message', 'clients']
         widgets = {
             'period': forms.Select(attrs={'class': 'form-control'}),
-            'status': forms.Select(attrs={'class': 'form-control'}),
         }
+
+    def clean_time(self):
+        time = self.cleaned_data['time']
+        if time < timezone.now().date():
+            raise forms.ValidationError("Дата начала отправки не может быть в прошлом.")
+        return time
