@@ -4,6 +4,7 @@ from django.urls import path
 from app.smm.views import (ClientView, ClientCreateView, ClientUpdateView, ClientDeleteView,
                            MessageView, MessageCreateView, MessageUpdateView, MessageDeleteView,
                            MailView, MailCreateView, MailUpdateView, MailDeleteView, SendMailView)
+from app.smm.views.attempt import MailAttemptListView
 
 app_name = 'smm'
 
@@ -23,4 +24,6 @@ urlpatterns = [
     path('mail/<int:pk>/update/', MailUpdateView.as_view(), name='mail_update'),
     path('mail/<int:pk>/delete/', MailDeleteView.as_view(), name='mail_delete'),
     path('mail/<int:pk>/send/', SendMailView.as_view(), name='send_mail'),
+
+    path('attempt/', MailAttemptListView.as_view(), name='mail_attempt_list'),
 ]
