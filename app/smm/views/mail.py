@@ -1,6 +1,7 @@
 # app/smm/views/mail.py
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, View
@@ -10,31 +11,49 @@ from app.smm.models import Mail
 from django.core.mail import send_mail
 
 
-class MailView(ListView):
+class MailView(LoginRequiredMixin, ListView):
     model = Mail
 
-
-class MailCreateView(CreateView):
-    model = Mail
-    form_class = MailForm
-    success_url = reverse_lazy('smm:mail_list')
+    def get_queryset(self):
+        return Mail.objects.filter(user=self.request.user)
 
 
-class MailUpdateView(UpdateView):
+class MailCreateView(LoginRequiredMixin, CreateView):
     model = Mail
     form_class = MailForm
     success_url = reverse_lazy('smm:mail_list')
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
-class MailDeleteView(DeleteView):
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class MailUpdateView(LoginRequiredMixin, UpdateView):
+    model = Mail
+    form_class = MailForm
+    success_url = reverse_lazy('smm:mail_list')
+
+    def get_queryset(self):
+        return Mail.objects.filter(user=self.request.user)
+
+
+class MailDeleteView(LoginRequiredMixin,DeleteView):
     model = Mail
     success_url = reverse_lazy('smm:mail_list')
     template_name = 'smm/mail_confirm_delete.html'
 
+    def get_queryset(self):
+        return Mail.objects.filter(user=self.request.user)
 
-class SendMailView(View):
+
+class SendMailView(LoginRequiredMixin, View):
     def post(self, request, pk):
-        mailing = get_object_or_404(Mail, pk=pk)
+        mailing = get_object_or_404(Mail, pk=pk, user=request.user)
         clients = mailing.clients.all()
         message = mailing.message.text
         subject = mailing.message.name

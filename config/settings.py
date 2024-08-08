@@ -1,4 +1,3 @@
-# config/settings.py
 import os
 from pathlib import Path
 
@@ -34,6 +33,7 @@ USER_APPS = [
     'app.smm.apps.SmmConfig',
     'django_celery_results',
     'django_celery_beat',
+    'app.users.apps.UsersConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + USER_APPS
@@ -101,7 +101,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Internationalization
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 
@@ -116,6 +116,9 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = (
     BASE_DIR / 'static',
 )
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -145,6 +148,11 @@ CELERY_CACHE_BACKEND = 'default'
 CELERY_BEAT_SCHEDULE = {
     'send-mailings-every-day': {
         'task': 'app.smm.tasks.send_mailings',
-        'schedule': crontab(hour=18, minute=00),
+        'schedule': crontab(hour=4, minute=0),
     },
 }
+
+AUTH_USER_MODEL = 'users.User'
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'users:login'

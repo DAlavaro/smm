@@ -1,0 +1,19 @@
+<!-- app/templates/users/registration_success.html -->
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-3">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header">Регистрация успешна</div>
+                    <div class="card-body">
+                        <p>Вы успешно зарегистрировались. Пароль для входа отправлен на ваш email.</p>
+                        <a href="{% url 'users:login' %}" class="btn btn-primary">Войти</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

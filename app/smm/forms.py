@@ -31,10 +31,17 @@ class MailForm(StyleFormMixin, forms.ModelForm):
     )
 
     clients = forms.ModelMultipleChoiceField(
-        queryset=Client.objects.all(),
+        queryset=Client.objects.none(),
         widget=forms.CheckboxSelectMultiple,
         required=True,
         label='Клиенты'
+    )
+
+    message = forms.ModelChoiceField(
+        queryset=Message.objects.none(),
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        required=True,
+        label='Сообщение'
     )
 
     class Meta:
@@ -43,6 +50,13 @@ class MailForm(StyleFormMixin, forms.ModelForm):
         widgets = {
             'period': forms.Select(attrs={'class': 'form-control'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user is not None:
+            self.fields['clients'].queryset = Client.objects.filter(user=user)
+            self.fields['message'].queryset = Message.objects.filter(user=user)
 
     def clean_time(self):
         time = self.cleaned_data['time']
