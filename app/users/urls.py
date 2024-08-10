@@ -14,5 +14,4 @@ urlpatterns = [
     path('profile/', UserUpdateView.as_view(), name='profile'),
     path('profile/genpassword/', genpassword, name='genpassword'),
     path('registration-success/', registration_success, name='registration_success'),
-    # path('signup/', SignUpView.as_view(), name='signup'),
 ]

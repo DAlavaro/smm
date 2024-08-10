@@ -1,3 +1,4 @@
+# app/users/management/commands/csu.py
 from django.core.management import BaseCommand
 
 from app.users.models import User
@@ -17,5 +18,3 @@ class Command(BaseCommand):
 
         user.set_password('admin')
         user.save()
-
-

@@ -50,3 +50,9 @@ class Mail(models.Model):
         return ", ".join([client.name for client in self.clients.all()])
 
     get_clients.short_description = 'Clients'
+
+    class Meta:
+        permissions = [
+            ("view_any_mail", "Can view any mail"),  # Разрешение на просмотр любых рассылок
+            ("disable_mail", "Can disable mail"),  # Разрешение на отключение рассылок
+        ]
