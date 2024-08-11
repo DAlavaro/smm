@@ -23,6 +23,10 @@ class MessageForm(StyleFormMixin, forms.ModelForm):
         model = Message
         fields = ['name', 'text']
 
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
 
 class MailForm(StyleFormMixin, forms.ModelForm):
     time = forms.DateField(

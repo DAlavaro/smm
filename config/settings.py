@@ -148,7 +148,7 @@ CELERY_CACHE_BACKEND = 'default'
 CELERY_BEAT_SCHEDULE = {
     'send-mailings-every-day': {
         'task': 'app.smm.tasks.send_mailings',
-        'schedule': crontab(hour=4, minute=0),
+        'schedule': crontab(hour=8, minute=10),
     },
 }
 
