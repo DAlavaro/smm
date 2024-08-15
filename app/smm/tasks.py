@@ -1,4 +1,4 @@
-# app/smm/tasks.py
+# app/users/tasks.py
 from celery import shared_task
 from datetime import timedelta
 from django.utils import timezone
@@ -7,9 +7,7 @@ from django.conf import settings
 from app.smm.models import Mail, MailAttempt
 import logging
 
-
 logger = logging.getLogger(__name__)
-
 
 @shared_task
 def send_mailings():
@@ -17,8 +15,11 @@ def send_mailings():
     mails = Mail.objects.filter(status='active', time__lte=today)
 
     for mail in mails:
-        # Создание записи о попытке рассылки
-        attempt = MailAttempt(mail=mail)
+        # Получаем пользователя, к которому относится рассылка
+        user = mail.user
+
+        # Создание записи о попытке рассылки с привязкой к пользователю
+        attempt = MailAttempt(mail=mail, user=user)
         try:
             clients = mail.clients.all()
             message = mail.message.text

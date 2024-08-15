@@ -3,36 +3,32 @@
 {% block content %}
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-3">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2>Все рассылки {{ user.email }}</h2>
-            <a href="{% url 'smm:mail_create' %}" class="btn btn-primary">Создать рассылку</a>
+            <h2>Все рассылки (Менеджер) {{ user.email }}</h2>
         </div>
         <div class="table-responsive">
             <table class="table table-striped table-sm">
                 <thead>
                 <tr>
                     <th scope="col">№</th>
-                    <th scope="col">Название</th>
-                    <th scope="col">Начало</th>
+                    <th scope="col">Владелец</th>
+                    <th scope="col">Текст сообщения</th>
                     <th scope="col">Периодичность</th>
                     <th scope="col">Статус</th>
-                    <th scope="col">Действия</th>
+                    <th scope="col">Отключение</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for object in object_list %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
-                        <td>
-                            <a href="{% url 'smm:mail_detail' object.pk %}">{{ object.name }}</a>
-                        </td>
-                        <td>{{ object.time }}</td>
+                        <td>{{ object.user.email }}</td>
+                        <td>{{ object.message.text }}</td>
                         <td>{{ object.period }}</td>
                         <td>{{ object.status }}</td>
                         <td>
-                            <a href="{% url 'smm:mail_delete' object.pk %}" class="btn btn-sm btn-danger">Удалить</a>
-                            <form method="post" action="{% url 'smm:send_mail' object.pk %}" style="display:inline;">
+                            <form method="post" action="{% url 'smm:mail_block' object.pk %}">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-sm btn-success">Отправить</button>
+                                <button type="submit" class="btn btn-sm btn-danger">Блокировать</button>
                             </form>
                         </td>
                     </tr>

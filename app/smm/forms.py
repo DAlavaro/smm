@@ -62,6 +62,10 @@ class MailForm(StyleFormMixin, forms.ModelForm):
             self.fields['clients'].queryset = Client.objects.filter(user=user)
             self.fields['message'].queryset = Message.objects.filter(user=user)
 
+            if self.instance.pk:
+                self.fields['clients'].initial = self.instance.clients.all()
+                self.fields['message'].initial = self.instance.message
+
     def clean_time(self):
         time = self.cleaned_data['time']
         if time < timezone.now().date():
