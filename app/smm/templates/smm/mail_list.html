@@ -23,7 +23,7 @@
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <td>
-                            <a href="{% url 'smm:mail_detail' object.pk %}">{{ object.name }}</a>
+                            <a href="{% url 'smm:mail_update' object.pk %}">{{ object.name }}</a>
                         </td>
                         <td>{{ object.time }}</td>
                         <td>{{ object.period }}</td>
