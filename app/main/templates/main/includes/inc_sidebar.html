@@ -33,6 +33,14 @@
                             Отчеты
                         </a>
                     </li>
+                    {% if is_manager %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:user_list' %}">
+                            <span data-feather="users" class="align-text-bottom"></span>
+                            Список пользователей
+                        </a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>

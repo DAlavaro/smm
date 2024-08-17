@@ -1,4 +1,3 @@
-{#app/smm/templates/smm/mail_list.html#}
 {% extends 'main/base.html' %}
 
 {% block content %}
@@ -10,7 +9,7 @@
 
                     <div class="card-header">
                         {% if object %}
-                            <h3>Редактирование рассылки</h3>
+                            <h3>{% if is_read_only %}Просмотр рассылки{% else %}Редактирование рассылки{% endif %}</h3>
                         {% else %}
                             <h3>Добавление новой рассылки</h3>
                         {% endif %}
@@ -22,18 +21,21 @@
                     </div>
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-outline-success">
-                            {% if object %}
-                                Сохранить
-                            {% else %}
-                                Добавить
-                            {% endif %}
-                        </button>
+                        {% if not is_read_only %}
+                            <button type="submit" class="btn btn-outline-success">
+                                {% if object %}
+                                    Сохранить
+                                {% else %}
+                                    Добавить
+                                {% endif %}
+                            </button>
+                        {% else %}
+                            <a href="{% url 'smm:mail_list' %}" class="btn btn-outline-secondary">Назад</a>
+                        {% endif %}
                     </div>
 
                 </div>
             </div>
         </form>
     </main>
-
 {% endblock %}
