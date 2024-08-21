@@ -12,16 +12,15 @@
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" crossorigin="anonymous">
     <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
     <link href="{% static 'css/dfm_styles.css' %}" rel="stylesheet">
-    
 </head>
 <body>
 
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
     {% include 'main/includes/inc_header.html' %}
 </header>
-    {% include 'main/includes/inc_sidebar.html' %}
+{% include 'main/includes/inc_sidebar.html' %}
 {% block content %}
-	
+
 {% endblock %}
 
 </div>

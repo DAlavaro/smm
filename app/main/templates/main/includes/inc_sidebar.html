@@ -4,7 +4,7 @@
             <div class="position-sticky pt-3 sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">
+                        <a class="nav-link active" aria-current="page" href="{% url 'main:home' %}">
                             <span data-feather="home" class="align-text-bottom"></span>
                             Главная страница
                         </a>
@@ -33,13 +33,19 @@
                             Отчеты
                         </a>
                     </li>
-                    {% if is_manager %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'users:user_list' %}">
-                            <span data-feather="users" class="align-text-bottom"></span>
-                            Список пользователей
+                        <a class="nav-link" href="{% url 'blog:blog_list' %}">
+                            <span data-feather="bar-chart-2" class="align-text-bottom"></span>
+                            Блог
                         </a>
                     </li>
+                    {% if is_manager %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'users:user_list' %}">
+                                <span data-feather="users" class="align-text-bottom"></span>
+                                Список пользователей
+                            </a>
+                        </li>
                     {% endif %}
                 </ul>
             </div>

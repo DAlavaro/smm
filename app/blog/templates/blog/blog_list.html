@@ -1,0 +1,34 @@
+{# blog/blog_list.html #}
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>Блог</h2>
+            {% if perms.blog.add_blog %}
+                <a href="{% url 'blog:blog_create' %}" class="btn btn-primary">Добавить статью</a>
+            {% endif %}
+        </div>
+        <div class="row">
+            {% for object in object_list %}
+                <div class="col-md-4 mb-4 d-flex align-items-stretch">
+                    <div class="card" style="width: 100%;">
+                        <div class="card-header">
+                            <h5 class="card-title">{{ object.title }}</h5>
+                        </div>
+                        {% if object.image %}
+                            <img src="{{ object.image.url }}" class="card-img-top" alt="{{ object.title }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <p class="card-text">{{ object.content|truncatechars:100 }}</p>
+                            <a href="{% url 'blog:blog_detail' object.pk %}" class="btn">Подробнее</a>
+                        </div>
+                        <div class="card-footer">
+                            Статистика
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+{% endblock %}

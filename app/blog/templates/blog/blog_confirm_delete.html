@@ -1,0 +1,14 @@
+{# blog/blog_confirm_delete #}
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-3">
+        <h1>Удалить запись?</h1>
+        <p>Вы уверены, что хотите удалить "{{ object.title }}"?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Удалить</button>
+            <a href="{% url 'blog:blog_detail' object.pk %}" class="btn btn-secondary">Отмена</a>
+        </form>
+    </main>
+{% endblock %}

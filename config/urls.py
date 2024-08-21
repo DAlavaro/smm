@@ -10,6 +10,7 @@ urlpatterns = [
     path('', include('app.main.urls'), name='main'),
     path('smm/', include('app.smm.urls'), name='smm'),
     path('users/', include('app.users.urls'), name='users'),
+    path('blog/', include('app.blog.urls'), name='blog'),
 ]
 
 if settings.DEBUG:
