@@ -34,6 +34,7 @@ USER_APPS = [
     'django_celery_results',
     'django_celery_beat',
     'app.users.apps.UsersConfig',
+    'app.blog.apps.BlogConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + USER_APPS
@@ -137,12 +138,18 @@ EMAIL_USE_SSL = True
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'django-db'
 
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
+
+CACHE_ENABLED=True
+if CACHE_ENABLED:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": "redis://127.0.0.1:6379",
+            "TIMEOUT": 300 # Ручная регулировка времени жизни кеша в секундах, по умолчанию 300
+        }
     }
-}
+
+
 
 # celery setting.
 CELERY_CACHE_BACKEND = 'default'

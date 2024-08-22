@@ -1,13 +1,10 @@
 # app/users/views.py
-from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import LoginView as BaseLoginView, LogoutView as BaseLogoutView
-from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, ListView
-
 from app.users.forms import CustomAuthenticationForm, UserRegisterForm, UserForm
 from app.users.models import User
 from app.users.services import generate_and_send_password
